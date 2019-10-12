@@ -18,7 +18,7 @@ mongoose
 
 app.use(express.json());
 
-app.use(express.static(__dirname + '../dist'));
+app.use(express.static(__dirname, '../dist'));
 
 app.post('/save', roomCtrl.crRoom); // create Room
 
