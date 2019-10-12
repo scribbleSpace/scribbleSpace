@@ -14,11 +14,11 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  saveId: {
-    type: Number,
-    required: false,
-    unique: true,
-  },
+  // saveId: {
+  //   type: Number,
+  //   required: false,
+  //   unique: true,
+  // },
 });
 
 const createRoomModel = name => {
