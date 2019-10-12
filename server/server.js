@@ -24,15 +24,10 @@ app.use(express.static(path.resolve(__dirname, '../dist'))); //
 
 // app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
 
-// register user account
-app.post('/login', userCtrl.createRoom, (req, res) => {
-  console.log('user registered');
-  res.send('user registered');
-});
+// login user account
+app.post('/login', userCtrl.createRoom);
 
-app.post('/save', roomCtrl.crRoom); // create Room
-
-app.get('/find', roomCtrl.findRoom); // find Room not ready
+app.post('/save', userCtrl.saveRm); // onClick save to save state
 
 function onConnection(socket) {
   socket.on('drawing', data => socket.broadcast.emit('drawing', data));
