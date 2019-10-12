@@ -28,20 +28,27 @@ body {
     margin: 0 auto;
     height: 100px;
     width: 500px;
-    border: 5px solid black;
+    /* border: 5px solid black; */
 }
 
 .inputBoxOnLoginComponent {
-    margin-top: 5px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     width: 200px;
     height:20px;
 }
 
+.inputBoxOnLoginComponent input {
+    margin-top: 5px;
+    width: 300px;
+    height:30px;
+    border: 2px solid rgb(209, 210, 213);
+}
+
 .loginButton {
     margin-top: 5px;
-    width: 200px;
-    height:20px;
-    background-color: cornflowerblue;
+    width: 30px;
+    height:30px;
+    background-color: #4296CE;
 }
