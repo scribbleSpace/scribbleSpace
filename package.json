@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.4",
     "react": "^16.10.2",
+    "react-canvas-draw": "^1.0.2",
     "react-dom": "^16.10.2",
     "socket.io": "^2.3.0"
   },

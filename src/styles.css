@@ -1,4 +1,19 @@
-div {
-    background-color: palegreen;
+.mainCanvas {
+    position: relative;
+    top: 0px;
+    display: flexbox;
+    margin: 0 auto;
+    height: 400px;
+    width: 600px;
+    border: 10px solid black;
+    border-radius: 10px;
+}
+
+.logoMain {
+    color: aqua;
+    text-align: center;
+    font-size: 80px;
+    font-family: 'Indie Flower', cursive;
+    text-shadow: 4px 4px  black;
 }
 
