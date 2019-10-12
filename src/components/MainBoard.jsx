@@ -7,6 +7,8 @@ class MainBoard extends Component {
     super(props);
     this.state = {};
     this.saveDrawingData = this.saveDrawingData.bind(this);
+    this.leaveRoom = this.leaveRoom.bind(this);
+    this.loadBoard = this.loadBoard.bind(this);
   }
 
   saveDrawingData(data) {
@@ -16,6 +18,24 @@ class MainBoard extends Component {
       body: JSON.stringify({ data }),
     });
   }
+
+  leaveRoom() {
+    fetch('/leaveroom', {
+      method: 'PUT',
+    });
+  }
+
+  loadBoard(loadCommand) {
+    fetch('/load', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.saveableCanvas.loadSaveData(data.data, true);
+      });
+  }
+
+  // / loadSaveData(saveData: String, immediate: Boolean)
 
   render() {
     return (
@@ -30,6 +50,10 @@ class MainBoard extends Component {
         />
         <br />
         <br />
+        <button type="button" onClick={this.loadBoard}>
+          LoadRoom
+        </button>
+
         <button
           type="button"
           onClick={() => {
@@ -37,6 +61,17 @@ class MainBoard extends Component {
           }}
         >
           Save Me
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            this.saveDrawingData(this.saveableCanvas.clear());
+          }}
+        >
+          Clear
+        </button>
+        <button type="button" onClick={this.leaveRoom}>
+          Leave Room
         </button>
       </div>
     );
