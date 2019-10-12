@@ -13,12 +13,8 @@ const db =
 // connect to Mongo
 mongoose
   .connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => {
-    console.log('MongoDB connected..');
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  .then(() => console.log('MongoDB connected..'))
+  .catch(err => console.log(err));
 
 app.use(express.json());
 
@@ -26,7 +22,7 @@ app.use(express.static(__dirname + '../dist'));
 
 app.post('/save', roomCtrl.crRoom); // create Room
 
-app.get('/find', roomCtrl.findRoom); // find Room
+app.get('/find', roomCtrl.findRoom); // find Room not ready
 
 function onConnection(socket) {
   socket.on('drawing', data => socket.broadcast.emit('drawing', data));
