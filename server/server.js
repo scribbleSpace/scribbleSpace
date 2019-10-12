@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const roomCtrl = require('./controllers/roomCtrl');
+const userCtrl = require('./controllers/userCtrl');
 
 // DB config
 const db =
@@ -19,9 +20,15 @@ mongoose
 
 app.use(express.json());
 
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../dist'))); //
 
 // app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
+
+// register user account
+app.post('/login', userCtrl.createRoom, (req, res) => {
+  console.log('user registered');
+  res.send('user registered');
+});
 
 app.post('/save', roomCtrl.crRoom); // create Room
 

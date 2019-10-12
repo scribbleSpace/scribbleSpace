@@ -1,5 +1,6 @@
 const createRoomModel = require('../models/roomModel');
 
+// passing input room into argument
 const Room = createRoomModel('room6');
 
 const roomCtrl = {};
