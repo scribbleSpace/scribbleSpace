@@ -3,6 +3,9 @@ import CanvasDraw from 'react-canvas-draw';
 import Styles from '../styles.css';
 import LoginForm from './LoginForm.jsx';
 
+const io = require('socket.io-client');
+
+const socket = io();
 
 class MainBoard extends Component {
   constructor(props) {
@@ -12,6 +15,7 @@ class MainBoard extends Component {
       roomName: null,
       password: null,
       loggedin: false,
+      socketId: null,
     };
     this.saveDrawingData = this.saveDrawingData.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
@@ -20,6 +24,13 @@ class MainBoard extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
     this.loadBoard = this.loadBoard.bind(this);
+  }
+
+  componentDidMount() {
+    socket.on('connect', () => {
+      this.setState({ socketId: socket.id });
+      console.log('socket?', this.state.socketId);
+    });
   }
 
   saveDrawingData(data) {
@@ -31,30 +42,40 @@ class MainBoard extends Component {
   }
 
   handleChangeName(event) {
-    console.log(event, "EVENT TARGET", event.target.value)
-    this.setState({name: event.target.value});
+    console.log(event, 'EVENT TARGET', event.target.value);
+    this.setState({ name: event.target.value });
   }
 
   handleChangeRoom(event) {
-    console.log(event, "EVENT TARGET", event.target.value)
-    this.setState({roomName: event.target.value});
+    console.log(event, 'EVENT TARGET', event.target.value);
+    this.setState({ roomName: event.target.value });
   }
 
   handleChangePassword(event) {
-    console.log(event, "EVENT TARGET", event.target.value)
-    this.setState({password: event.target.value});
+    console.log(event, 'EVENT TARGET', event.target.value);
+    this.setState({ password: event.target.value });
   }
 
   handleSubmit(event) {
-    console.log('A name was submitted: ', this.state.name, this.state.roomName, this.state.password );
+    console.log(
+      'A name was submitted: ',
+      this.state.name,
+      this.state.roomName,
+      this.state.password
+    );
     event.preventDefault();
     fetch('/login', {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify({ name: this.state.name, roomName: this.state.roomName, password: this.state.password }),
-    }).then(res => this.setState({loggedin: res}));
+      body: JSON.stringify({
+        name: this.state.name,
+        roomName: this.state.roomName,
+        password: this.state.password,
+        socketId: this.state.socketId,
+      }),
+    }).then(res => this.setState({ loggedin: res }));
   }
-    
+
   leaveRoom() {
     fetch('/leaveroom', {
       method: 'PUT',
@@ -115,10 +136,16 @@ class MainBoard extends Component {
     }
     if (!this.state.loggedin) {
       return (
-        <LoginForm handleSubmit={this.handleSubmit} handleChangePassword={this.handleChangePassword} 
-          handleChangeRoom={this.handleChangeRoom} handleChangeName={this.handleChangeName} 
-          name={this.state.name} password={this.state.password} roomName={this.state.roomName} />
-      )
+        <LoginForm
+          handleSubmit={this.handleSubmit}
+          handleChangePassword={this.handleChangePassword}
+          handleChangeRoom={this.handleChangeRoom}
+          handleChangeName={this.handleChangeName}
+          name={this.state.name}
+          password={this.state.password}
+          roomName={this.state.roomName}
+        />
+      );
     }
   }
 }
