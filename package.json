@@ -21,7 +21,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react-canvas-draw": "^1.0.2",
+    "react-dom": "^16.10.2",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
