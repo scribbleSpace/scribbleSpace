@@ -27,12 +27,11 @@ app.use(express.static(path.resolve(__dirname, '../dist'))); //
 // register user account
 app.post('/login', userCtrl.createRoom, (req, res) => {
   console.log('user registered');
-  res.send('user registered');
+  res.status(200).send('user registered');
 });
 
 app.post('/save', roomCtrl.crRoom); // create Room
-
-app.get('/find', roomCtrl.findRoom); // find Room not ready
+// app.get('/find', roomCtrl.findRoom); // find Room not ready
 
 function onConnection(socket) {
   socket.on('drawing', data => socket.broadcast.emit('drawing', data));

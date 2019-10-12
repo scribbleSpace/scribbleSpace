@@ -1,13 +1,22 @@
 const mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema({
-  data: {
+  roomName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
     type: String,
     required: true,
   },
+  data: {
+    type: String,
+    required: false,
+  },
   saveId: {
     type: Number,
-    required: true,
+    required: false,
     unique: true,
   },
 });
