@@ -38,7 +38,8 @@ app.post('/login',
 // app.get('/find', roomCtrl.findRoom); // find Room not ready
 
 function onConnection(socket) {
-  socket.broadcast.emit("HI");
+  socket.on('transfer', (data) => io.emit('broadcast', data));
+  // socket.on('transfer', (data) => socket.broadcast.emit('transfer', data));
 }
 
 io.on('connection', onConnection);

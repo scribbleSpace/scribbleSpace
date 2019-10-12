@@ -16,6 +16,7 @@ class MainBoard extends Component {
       password: null,
       loggedin: false,
       socketId: null,
+      data: null
     };
     this.saveDrawingData = this.saveDrawingData.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
@@ -24,12 +25,22 @@ class MainBoard extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
     this.loadBoard = this.loadBoard.bind(this);
+    this.throttle = this.throttle.bind(this);
+    this.broadcastData = this.broadcastData.bind(this);
   }
 
   componentDidMount() {
     socket.on('connect', () => {
-      this.setState({ socketId: socket.id });
-      console.log('socket?', this.state.socketId);
+      // console.log('socket?', socketId);
+      this.setState({ socketId: socket.id});
+      // socket.emit('transfer', [1,2,3]);
+    });
+    socket.on('broadcast', data => {
+      console.log(data);
+      // if(!this.props.intervalId){
+      this.setState({data});
+      // }
+      // this.saveableCanvas.loadSaveData(data, true);
     });
   }
 
@@ -91,20 +102,44 @@ class MainBoard extends Component {
         this.saveableCanvas.loadSaveData(data.data, true);
       });
   }
+  broadcastData(event){
 
+
+    // console.log('hi........');
+    let saveData =  this.saveableCanvas.getSaveData();
+    // console.log('broadcasting:', this.saveableCanvas.getSaveData());
+    socket.emit('transfer', saveData);
+    console.log("this is set interval");
+
+  }
+
+  throttle(func, delay){
+    let start = new Date().getTime();
+    return function(...args){
+      let now = new Date().getTime();
+      if(delay < now - start){
+        return func(...args)
+      }
+    }
+  }
   // / loadSaveData(saveData: String, immediate: Boolean)
 
   render() {
+    let broadcaster = this.throttle(this.broadcastData, 50);
     if (this.state.loggedin) {
+      
       return (
-        <div className="mainCanvas">
+        <div className="mainCanvas" 
+              onMouseUp={broadcaster}>
           <CanvasDraw
             ref={canvasDraw => {
               this.saveableCanvas = canvasDraw;
             }}
+            saveData={this.state.data}
             lazyRadius="1"
             brushRadius="4"
             canvasWidth="600px"
+            immediateLoading="true"
           />
           <br />
           <br />
