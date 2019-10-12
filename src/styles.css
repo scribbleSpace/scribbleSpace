@@ -5,15 +5,21 @@
     margin: 0 auto;
     height: 400px;
     width: 600px;
-    border: 10px solid black;
+    border: 10px solid #062933;
     border-radius: 10px;
+    box-shadow:5px 5px rgb(209, 210, 213);
 }
 
 .logoMain {
-    color: aqua;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color:#4296CE;
     text-align: center;
-    font-size: 80px;
-    font-family: 'Indie Flower', cursive;
-    text-shadow: 4px 4px  black;
+    font-size: 60px;
+    font-family: 'Hepta Slab', serif;
+    text-shadow: 3px 3px rgb(209, 210, 213);
 }
 
+body {
+   background-color: #FBFCFD;
+}
