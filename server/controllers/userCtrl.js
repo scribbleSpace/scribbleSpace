@@ -1,11 +1,17 @@
-const User = require('../models/User');
+const User = require('../models/userModel.js');
 
 const userCtrl = {};
-
+userCtrl.setCookies = function(req, res, next){
+  console.log('Hit Set Cookies');
+  const { name, roomName, clientSocketId } = req.body;
+  res.cookie('clientSocketId', clientSocketId);
+  res.cookie('name', name);
+  res.cookie('roomName', roomName);
+  next();
+}
 // find if room exist, if not new room //otherwise check password for the room
 userCtrl.createRoom = function(req, res, next) {
   const { name, roomName, password } = req.body;
-  res.cookie({ name });
   User.find({ roomName }, function(err, room) {
     if (!room) {
       User.create({ roomName, password }, (err, db) => {
@@ -21,6 +27,7 @@ userCtrl.createRoom = function(req, res, next) {
       if (room.password !== password) {
         return res.status(403).send(false);
       }
+      return next();
     }
   });
 };
