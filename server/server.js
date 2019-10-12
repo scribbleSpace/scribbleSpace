@@ -4,6 +4,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const path = require('path');
 
 const roomCtrl = require('./controllers/roomCtrl');
 
@@ -22,7 +23,9 @@ mongoose
 
 app.use(express.json());
 
-app.use(express.static(__dirname + '../dist'));
+app.use(express.static(path.resolve(__dirname, '../dist')));
+
+// app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
 
 app.post('/save', roomCtrl.crRoom); // create Room
 
