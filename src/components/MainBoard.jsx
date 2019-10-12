@@ -6,7 +6,7 @@ class MainBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.saveDrawingData = this.saveableCanvas.bind(this);
+    this.saveDrawingData = this.saveDrawingData.bind(this);
   }
 
   saveDrawingData(data) {
