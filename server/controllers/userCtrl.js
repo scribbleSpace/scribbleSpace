@@ -35,6 +35,8 @@ userCtrl.createRoom = function(req, res, next) {
           return res.status(500).send('error in create room');
         }
         res.locals.name = name;
+        res.locals.roomName = roomName;
+        res.status(200).send(res.locals.roomName);
         console.log('new room created');
         return next();
       });
@@ -60,11 +62,23 @@ userCtrl.createRoom = function(req, res, next) {
 // function to save current state
 userCtrl.saveRm = function(req, res, next) {
   const { data } = req.body;
-  Room.findOneAndUpdate({}, { data }, { upsert: true }, (err, doc) => {
+  Room.findOneAndUpdate({}, { data }, { upsert: false }, (err, doc) => {
     if (err) {
       return res.send('error in room');
     }
     console.log('data created', doc);
+    return next();
+  });
+};
+
+userCtrl.loadRm = function(req, res, next) {
+  // console.log('req, res', req.body);
+  Room.find({}, (err, doc) => {
+    if (err) {
+      return res.status(500).send('error in create room');
+    }
+    res.status(200).send(doc[0].data);
+    console.log('loading data', doc[0].data);
     return next();
   });
 };

@@ -92,7 +92,12 @@ class MainBoard extends Component {
         password: this.state.password,
         socketId: this.state.socketId,
       }),
-    }).then(res => this.setState({ loggedin: res }));
+    })
+      // .then(db => db.json())
+      .then(res => {
+        console.log(`${this.state.name} is in room: ${this.state.roomName}`);
+        return this.setState({ loggedin: res });
+      });
   }
 
   // Leave Room sets the state of "Logged in " to null.
@@ -107,12 +112,23 @@ class MainBoard extends Component {
   // Gets data from dateBase and renders canvas with data.
 
   loadBoard(loadCommand) {
+    console.log('roomname', this.state.roomName);
     fetch('/load', {
-      method: 'GET',
+      headers: { 'Content-type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        name: this.state.name,
+        roomName: this.state.roomName,
+        password: this.state.password,
+        socketId: this.state.socketId,
+      }),
     })
       .then(res => res.json())
       .then(data => {
-        this.saveableCanvas.loadSaveData(data.data, true);
+        const db = JSON.stringify(data);
+        console.log('loading ', db);
+        this.setState({ data: db });
+        // this.saveableCanvas.loadSaveData(data, true);
       });
   }
 
@@ -132,7 +148,11 @@ class MainBoard extends Component {
   render() {
     if (this.state.loggedin) {
       return (
-        <div className="mainCanvas" onMouseUp={this.broadcastData}>
+        <div
+          className="mainCanvas"
+          onMouseUp={this.broadcastData}
+          onTouchEnd={this.broadcastData}
+        >
           <CanvasDraw
             ref={canvasDraw => {
               this.saveableCanvas = canvasDraw;
