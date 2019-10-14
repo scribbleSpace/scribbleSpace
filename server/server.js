@@ -27,16 +27,10 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 // app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
 
-<<<<<<< HEAD
 // login user account
 app.post('/login', userCtrl.createRoom);
 
 app.post('/save', userCtrl.saveRm); // onClick save to save state
-=======
-app.post('/save', roomCtrl.crRoom); // create Room
-
-app.get('/find', roomCtrl.findRoom); // find Room
->>>>>>> 81074db9446e002b9ae37673a08e9c6e4a140c74
 
 function onConnection(socket) {
   socket.on('drawing', data => socket.broadcast.emit('drawing', data));
