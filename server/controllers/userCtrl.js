@@ -5,6 +5,15 @@ const User = require('../models/userModel');
 
 const userCtrl = {};
 
+userCtrl.setCookies = function(req, res, next) {
+  console.log('Hit Set Cookies');
+  const { name, roomName, clientSocketId } = req.body;
+  res.cookie('clientSocketId', clientSocketId);
+  res.cookie('name', name);
+  res.cookie('roomName', roomName);
+  next();
+};
+
 let Room;
 // find if room exist, if not new room //otherwise check password for the room
 userCtrl.createRoom = function(req, res, next) {
@@ -40,7 +49,7 @@ userCtrl.createRoom = function(req, res, next) {
           console.log('wrong password', rom);
           return res.status(403).send('false');
         }
-        res.cookie({ name }).send('true');
+        res.send('true');
         return next();
       });
     }

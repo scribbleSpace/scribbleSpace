@@ -5,6 +5,7 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
@@ -19,18 +20,19 @@ mongoose
   .catch(err => console.log(err));
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(express.static(path.resolve(__dirname, '../dist'))); //
 
 // app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
 
 // login user account
-app.post('/login', userCtrl.createRoom);
+app.post('/login', userCtrl.setCookies, userCtrl.createRoom);
 
 app.post('/save', userCtrl.saveRm); // onClick save to save state
 
 function onConnection(socket) {
-  socket.on('drawing', data => socket.broadcast.emit('drawing', data));
+  socket.on('transfer', data => io.emit('broadcast', data));
 }
 
 io.on('connection', onConnection);
