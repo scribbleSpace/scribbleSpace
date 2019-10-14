@@ -48,7 +48,7 @@ class MainBoard extends Component {
     fetch('/save', {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ data: data, roomName: this.state.roomName }),
     });
   }
 

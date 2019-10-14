@@ -24,18 +24,12 @@ app.use(cookieParser());
 
 app.use(express.static(path.resolve(__dirname, '../dist'))); //
 
-// register user account
-app.post('/login', 
-  userCtrl.setCookies, 
-  userCtrl.createRoom, 
-  (req, res) => {
-    res.send(true);
-    // console.log(`$(req.body.name) is Logged In To $(req.body.roomName)`);
-});
+// app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
 
-// app.post('/save', roomCtrl.crRoom); // create Room
+// login user account
+app.post('/login', userCtrl.createRoom);
 
-// app.get('/find', roomCtrl.findRoom); // find Room not ready
+app.post('/save', userCtrl.saveRm); // onClick save to save state
 
 function onConnection(socket) {
   socket.on('transfer', (data) => io.emit('broadcast', data));
