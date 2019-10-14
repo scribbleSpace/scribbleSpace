@@ -4,45 +4,71 @@
   display: flexbox;
   margin: 0 auto;
   height: 400px;
-  width: 600px;
-  border: 10px solid #062933;
+  width: 800px;
+  border: 10px solid  rgb(146, 154, 175);
   border-radius: 10px;
-  box-shadow: 5px 5px rgb(209, 210, 213);
+  box-shadow: 5px 5px 5px rgb(118, 119, 123);
 }
 .logoMain {
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #4296ce;
+  color:#FEFEFE;
   text-align: center;
   font-size: 60px;
   font-family: 'Hepta Slab', serif;
-  text-shadow: 3px 3px rgb(209, 210, 213);
+  text-shadow: 2px 2px 2px rgb(122, 130, 153);
 }
 body {
-  background-color: #fbfcfd;
+  background-color: rgb(124, 207, 248);
 }
 .loginBox {
+
+  position: relative;
+  top: 15px;
   margin: 0 auto;
-  height: 100px;
-  width: 500px;
-  /* border: 5px solid black; */
+  height: 175px;
+  width: 350px;
+  /* border: 1px solid rgb(209, 210, 213); */
+  border-radius: 5px;
+  background-color:#FEFEFE;
+  padding: 15px;
+  box-shadow: 4px 4px 4px  rgb(146, 154, 175);
+
+  
 }
 .inputBoxOnLoginComponent {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 20px;
+    position: relative;
+    top:5px;  
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 30px;
 }
 .inputBoxOnLoginComponent input {
-  margin-top: 5px;
-  width: 300px;
-  height: 30px;
-  border: 2px solid rgb(209, 210, 213);
+    background-color: rgb(240, 240, 240); ;
+    padding-left: 3px;
+    margin-top: 5px;
+    width: 300px;
+    height: 30px;
+    /* border: 2px solid rgb(209, 210, 213); */
+    border-radius: 3px;
 }
-.loginButton {
-  margin-top: 5px;
-  width: 30px;
-  height: 30px;
-  background-color: #4296ce;
+#loginButton {
+    position: relative;
+    top: -1px;
+    padding-top: 5px;
+    padding-bottom: 25px;
+    width: 310px !important;
+    height: 30px !important;
+    margin-top: 5px;
+    background-color:#54B9ED;
 }
+
+#loginButton[value="Login"]{
+
+    color: whitesmoke;
+    font-size: 18px;
+}
+
+

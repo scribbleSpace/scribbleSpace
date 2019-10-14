@@ -7,6 +7,9 @@ const io = require('socket.io-client');
 
 const socket = io();
 
+// CanvasDraw imports the third party canvas npm package.
+// ReadMe docs located in node packages react-canvas-draw info on modifying the canvas app.
+
 class MainBoard extends Component {
   constructor(props) {
     super(props);
@@ -25,25 +28,26 @@ class MainBoard extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
     this.loadBoard = this.loadBoard.bind(this);
-    this.throttle = this.throttle.bind(this);
     this.broadcastData = this.broadcastData.bind(this);
   }
 
+  // On componentDidMount life cycle method, these events to occur.
+  // -Socket connection is created
+  // - State is updated with unique socket ID
+  // - This.state.data is updated with broadcast data.
+
   componentDidMount() {
     socket.on('connect', () => {
-      // console.log('socket?', socketId);
       this.setState({ socketId: socket.id });
-      // socket.emit('transfer', [1,2,3]);
     });
     socket.on('broadcast', data => {
-      console.log(data);
-      // if(!this.props.intervalId){
       this.setState({ data });
-      // }
-      // this.saveableCanvas.loadSaveData(data, true);
     });
   }
 
+  //
+  // Method Sends canvas drawing data to server
+  // Must be invoked within the appropriate React component
   saveDrawingData(data) {
     fetch('/save', {
       headers: { 'Content-type': 'application/json' },
@@ -51,6 +55,8 @@ class MainBoard extends Component {
       body: JSON.stringify({ data }),
     });
   }
+
+  // HandleChangeName,HandleChangeRoom , HandleChangePassword - Obtains the name,room,and password from login form.
 
   handleChangeName(event) {
     console.log(event, 'EVENT TARGET', event.target.value);
@@ -66,6 +72,8 @@ class MainBoard extends Component {
     console.log(event, 'EVENT TARGET', event.target.value);
     this.setState({ password: event.target.value });
   }
+  // Handle submit
+  // submits data from state and sends to server.
 
   handleSubmit(event) {
     console.log(
@@ -87,11 +95,16 @@ class MainBoard extends Component {
     }).then(res => this.setState({ loggedin: res }));
   }
 
+  // Leave Room sets the state of "Logged in " to null.
+
   leaveRoom() {
-    fetch('/leaveroom', {
-      method: 'PUT',
-    });
+    // fetch('/leaveroom', {
+    //   method: 'PUT',
+    // });
+    this.setState({ loggedin: null });
   }
+
+  // Gets data from dateBase and renders canvas with data.
 
   loadBoard(loadCommand) {
     fetch('/load', {
@@ -102,27 +115,21 @@ class MainBoard extends Component {
         this.saveableCanvas.loadSaveData(data.data, true);
       });
   }
+
+  // BroadcastData - Emits canvas data via the sockets to the server
+
   broadcastData(event) {
-    // console.log('hi........');
-    let saveData = this.saveableCanvas.getSaveData();
-    // console.log('broadcasting:', this.saveableCanvas.getSaveData());
+    const saveData = this.saveableCanvas.getSaveData();
     socket.emit('transfer', saveData);
-    console.log('this is set interval');
   }
 
-  throttle(func, delay) {
-    let start = new Date().getTime();
-    return function(...args) {
-      let now = new Date().getTime();
-      if (delay < now - start) {
-        return func(...args);
-      }
-    };
-  }
-  // / loadSaveData(saveData: String, immediate: Boolean)
-
+  // If this.state.loggedin is "truthy" it will render drawing board
+  // If "falsey" it will render the login in screen.
+  //
+  // To modify CanvasDraw component pass in appropriate jsx attributes.
+  // Consult the react-canvas-draw readme located in node modules for more information/specifics.
+  //
   render() {
-    // let broadcaster = this.throttle(this.broadcastData, 50);
     if (this.state.loggedin) {
       return (
         <div className="mainCanvas" onMouseUp={this.broadcastData}>
@@ -133,7 +140,7 @@ class MainBoard extends Component {
             saveData={this.state.data}
             lazyRadius="1"
             brushRadius="4"
-            canvasWidth="600px"
+            canvasWidth="800px"
             immediateLoading="true"
           />
           <br />

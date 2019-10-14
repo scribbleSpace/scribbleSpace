@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Styles from '../styles.css';
-
+// Creates LoginForm, allows for input of username,password, and room number.
 function LoginForm(props) {
   return (
     <div className="loginBox">
       <form onSubmit={props.handleSubmit}>
         <div className="inputBoxOnLoginComponent">
           <label>
+            {/* Username input field */}
             <input
               placeholder="Username"
               type="text"
@@ -15,6 +16,7 @@ function LoginForm(props) {
             />
           </label>
           <label>
+            {/* Room name input field */}
             <input
               placeholder="Room Name"
               type="text"
@@ -23,6 +25,7 @@ function LoginForm(props) {
             />
           </label>
           <label>
+            {/* Password input field */}
             <input
               placeholder="Password"
               type="text"
@@ -30,7 +33,8 @@ function LoginForm(props) {
               onChange={props.handleChangePassword}
             />
           </label>
-          <input className="loginButton" type="submit" value="Login" />
+          {/* Main submit button */}
+          <input id="loginButton" type="submit" value="Login" />
         </div>
       </form>
     </div>
