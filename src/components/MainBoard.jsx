@@ -84,7 +84,12 @@ class MainBoard extends Component {
         password: this.state.password,
         socketId: this.state.socketId,
       }),
-    }).then(res => this.setState({ loggedin: res }));
+    })
+      // .then(db => db.json())
+      .then(res => {
+        console.log(`${this.state.name} is in room: ${this.state.roomName}`);
+        return this.setState({ loggedin: res });
+      });
   }
 
   leaveRoom() {
@@ -94,12 +99,23 @@ class MainBoard extends Component {
   }
 
   loadBoard(loadCommand) {
+    console.log('roomname', this.state.roomName);
     fetch('/load', {
-      method: 'GET',
+      headers: { 'Content-type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        name: this.state.name,
+        roomName: this.state.roomName,
+        password: this.state.password,
+        socketId: this.state.socketId,
+      }),
     })
       .then(res => res.json())
       .then(data => {
-        this.saveableCanvas.loadSaveData(data.data, true);
+        const db = JSON.stringify(data);
+        console.log('loading ', db);
+        this.setState({ data: db });
+        // this.saveableCanvas.loadSaveData(data, true);
       });
   }
   broadcastData(event) {

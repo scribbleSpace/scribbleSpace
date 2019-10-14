@@ -31,6 +31,8 @@ app.post('/login', userCtrl.setCookies, userCtrl.createRoom);
 
 app.post('/save', userCtrl.saveRm); // onClick save to save state
 
+app.post('/load', userCtrl.loadRm);
+
 function onConnection(socket) {
   socket.on('transfer', data => io.emit('broadcast', data));
 }
