@@ -37,6 +37,7 @@ function LoginForm(props) {
           <input id="loginButton" type="submit" value="Login" />
         </div>
       </form>
+      <img id="scribbleLogo" src="scribble-svgrepo-com.svg" alt="" />
     </div>
   );
 }

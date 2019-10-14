@@ -93,7 +93,7 @@ class MainBoard extends Component {
         socketId: this.state.socketId,
       }),
     })
-      // .then(db => db.json())
+      .then(db => db.json())
       .then(res => {
         console.log(`${this.state.name} is in room: ${this.state.roomName}`);
         return this.setState({ loggedin: res });
@@ -165,29 +165,41 @@ class MainBoard extends Component {
           />
           <br />
           <br />
-          <button type="button" onClick={this.loadBoard}>
-            LoadRoom
-          </button>
+          <div className="buttonContainer">
+            <button
+              className="canvasButtons"
+              type="button"
+              onClick={this.loadBoard}
+            >
+              <h6>Load Room</h6>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              this.saveDrawingData(this.saveableCanvas.getSaveData());
-            }}
-          >
-            Save Me
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              this.saveDrawingData(this.saveableCanvas.clear());
-            }}
-          >
-            Clear
-          </button>
-          <button type="button" onClick={this.leaveRoom}>
-            Leave Room
-          </button>
+            <button
+              type="button"
+              className="canvasButtons"
+              onClick={() => {
+                this.saveDrawingData(this.saveableCanvas.getSaveData());
+              }}
+            >
+              <h6>Save Room</h6>
+            </button>
+            <button
+              type="button"
+              className="canvasButtons"
+              onClick={() => {
+                this.saveDrawingData(this.saveableCanvas.clear());
+              }}
+            >
+              <h6>Clear</h6>
+            </button>
+            <button
+              className="canvasButtons"
+              type="button"
+              onClick={this.leaveRoom}
+            >
+              <h6>Leave Room</h6>
+            </button>
+          </div>
         </div>
       );
     }
