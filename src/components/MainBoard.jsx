@@ -141,7 +141,11 @@ class MainBoard extends Component {
     // let broadcaster = this.throttle(this.broadcastData, 50);
     if (this.state.loggedin) {
       return (
-        <div className="mainCanvas" onMouseUp={this.broadcastData}>
+        <div
+          className="mainCanvas"
+          onMouseUp={this.broadcastData}
+          onTouchEnd={this.broadcastData}
+        >
           <CanvasDraw
             ref={canvasDraw => {
               this.saveableCanvas = canvasDraw;
