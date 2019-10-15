@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --mode development --open",
+    "dev": "nodemon server/server.js & webpack-dev-server --mode development --open",
     "build": "webpack"
   },
   "repository": {
@@ -20,13 +20,16 @@
   },
   "homepage": "https://github.com/scribbleSpace/scribbleSpace#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "mongoose": "^5.7.4",
     "react": "^16.10.2",
     "react-canvas-draw": "^1.0.2",
     "react-dom": "^16.10.2",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "webpack": "^4.41.1",
+    "webpack-cli": "^3.3.9",
+    "nodemon": "^1.19.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
