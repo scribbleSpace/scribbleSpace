@@ -10,6 +10,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 module.exports = {
   entry: "./src/index.js",
   mode: "production",
+  output: {
+    path: path.resolve(__dirname, "dist/"),
+    filename: "bundle.js"
+  },
+  resolve: { extensions: ["*", ".js", ".jsx"] },
   module: {
     rules: [
       {
@@ -24,20 +29,6 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
     ],
-  },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "dist/"),
-    filename: "bundle.js"
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "dist/"),
-    publicPath: "http://localhost:8080/dist/",
-    hotOnly: true,
-    proxy: { 'http://localhost:3000': {
-      target: 'http://localhost:8080',
-      pathRewrite: {'^/login' : '' } }
-  },
   },
   plugins: [new webpack.HotModuleReplacementPlugin(), htmlPlugin],
 };

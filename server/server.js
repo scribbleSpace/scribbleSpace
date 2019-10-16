@@ -26,6 +26,10 @@ app.get('/', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'))
 })
 
+app.post('/login', userCtrl.test, (req,res,next)=>{
+  console.log('login on express', req.body)
+})
+
 
 function onConnection(socket) {
   socket.on('transfer', data => io.emit('broadcast', data));

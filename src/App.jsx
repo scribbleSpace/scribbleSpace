@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import MainBoard from './components/MainBoard';
 import LoginForm from './components/LoginForm';
 
-// const io = require('socket.io-client');
-// const socket = io();
+
+const io = require('socket.io-client');
+const socket = io();
 
 class App extends Component {
 
@@ -72,42 +73,26 @@ class App extends Component {
   // Handle submit
   // submits data from state and sends to server.
   handleSubmit(event) {
+    event.preventDefault();
+
     console.log(
       'A name was submitted: ',
       this.state.name,
-      this.state.roomName,
       this.state.password
     );
-		event.preventDefault();
+
 		fetch('/login', {
 			headers: { 'Content-type': 'application/json' },
 			method: 'POST',
 			body: JSON.stringify({
         name: this.state.name,
-        roomName: this.state.roomName,
         password: this.state.password,
       })
 		})
 		.then(data => data.json())
 		.then(data => console.log(data))
 		.catch(err=> console.log(err))
-    // fetch('/login', {
-    //   headers: { 'Content-type': 'application/json' },
-    //   method: 'POST',
-      // body: JSON.stringify({
-      //   name: this.state.name,
-      //   roomName: this.state.roomName,
-      //   password: this.state.password,
-      //   socketId: this.state.socketId,
-      // }),
-    // })
-    //   .then(db => db.json())
-    //   .then(res => {
-    //     console.log(`${this.state.name} is in room: ${this.state.roomName}`);
-    //     return this.setState({ loggedin: res });
-    //   });
   }
-
   // Leave Room sets the state of "Logged in " to null.
 
   leaveRoom() {
@@ -144,46 +129,34 @@ class App extends Component {
     socket.emit('transfer', saveData);
   }
 
-  render() {
-    const mainBoard = () => {
-      return (
-      <div>
-        <h1 className="logoMain">scribbleSpace</h1>
-        <MainBoard 
-          broadcastData = {this.state.broadcastData}
-          saveableCanvas = {this.state.saveableCanvas}
-          data = {this.state.data}
-          loadBoard = {this.state.loadBoard}
-          saveDrawingData = {this.state.saveDrawingData}
-          leaveRoom = {this.state.leaveRoom}
-        />
-      </div>
-      )
-    }
+  render() {    
 		return (
-        <Switch>
-          {/* <Route path="/scribbleSpace" component={mainBoard} /> */}
-          <Route exact path="/">
-            <LoginForm 
-              handleSubmit= {this.handleSubmit}
-              name= {this.name}
-              handleChangeName= {this.handleChangeName}
-              roomName = {this.roomName}
-              handleChangeRoom = {this.handleChangeRoom}
-              password = {this.password}
-              handleChangePassword = {this.handleChangePassword}
-            />
-          </Route>
-
-          <Route path = '/scribbleSpace'>
-            <div>Hello</div>
-          </Route>
-
-
-          
-        </Switch>
+      <LoginForm 
+        handleSubmit= {this.handleSubmit}
+        name= {this.name}
+        handleChangeName= {this.handleChangeName}
+        password = {this.password}
+        handleChangePassword = {this.handleChangePassword}
+      />
 		)
   }
 }
 
 export default App;
+
+
+// const mainBoard = () => {
+  //   return (
+  //   <div>
+  //     <h1 className="logoMain">scribbleSpace</h1>
+  //     <MainBoard 
+  //       broadcastData = {this.state.broadcastData}
+  //       saveableCanvas = {this.state.saveableCanvas}
+  //       data = {this.state.data}
+  //       loadBoard = {this.state.loadBoard}
+  //       saveDrawingData = {this.state.saveDrawingData}
+  //       leaveRoom = {this.state.leaveRoom}
+  //     />
+  //   </div>
+  //   )
+  // }
