@@ -3,35 +3,29 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
-const mongoose = require('mongoose');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
-const roomCtrl = require('./controllers/roomCtrl');
+// const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
-
-// DB config
-const uri =
-  'mongodb+srv://Admin:heelie@cluster0-vzivm.mongodb.net/test?retryWrites=true&w=majority'
-mongoose
-  .connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => console.log('MongoDB connected..'))
-  .catch(err => console.log(err));
 
 app.use(express.json());
 app.use(cookieParser());
 
+
 //serve the bundle
-app.use(express.static(path.resolve(__dirname, '../dist'))); //
+app.use(express.static(path.resolve(__dirname, '../dist')), (req, res, next)=>{
+  next()
+}); //
 
-// app.get('/', ((req, res) => res.sendFile(path.resolve(__dirname + '/dist'))))
+app.get('/dist/bundle.js', (req,res,next)=>{
+  res.sendFile(path.resolve(__dirname, '../dist/bundle.js'))
+})
 
-// login user account
-app.post('/login', userCtrl.setCookies, userCtrl.createRoom);
+app.get('/', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '../src/index.html'))
+})
 
-app.post('/save', userCtrl.saveRm); // onClick save to save state
-
-app.post('/load', userCtrl.loadRm);
 
 function onConnection(socket) {
   socket.on('transfer', data => io.emit('broadcast', data));

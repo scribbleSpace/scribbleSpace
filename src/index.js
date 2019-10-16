@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Styles from './styles.css';
-import MainBoard from './components/MainBoard.jsx';
+import App from './App.jsx';
 
-const Index = () => (
+const Scibble = () => (
   <div>
-    <h1 className="logoMain">scribbleSpace</h1>
-    <MainBoard />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </div>
 );
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Scibble />, document.getElementById('root'));

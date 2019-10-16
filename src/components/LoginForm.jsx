@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import Styles from '../styles.css';
+import React from 'react';
 // Creates LoginForm, allows for input of username,password, and room number.
 function LoginForm(props) {
   return (
     <div className="loginBox">
+
       <form onSubmit={props.handleSubmit}>
         <div className="inputBoxOnLoginComponent">
           <label>

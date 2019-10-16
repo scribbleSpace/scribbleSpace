@@ -16,7 +16,7 @@ userCtrl.setCookies = function(req, res, next) {
 
 let Room;
 // find if room exist, if not new room //otherwise check password for the room
-userCtrl.createRoom = function(req, res, next) {
+userCtrl.checkUser = function(req, res, next) {
   const { name, roomName, password } = req.body;
 
   //connect to db, look at all collections, make them an array, 
@@ -37,16 +37,17 @@ userCtrl.createRoom = function(req, res, next) {
       //if roomName doesn't contain an s or a number at the end mongoose will make it so
       Room.create({ roomName, password }, (err, db) => {
         if (err) {
+          console.log(err, 'from createRoom')
           return res.status(500).send('error in create room');
         }
         res.locals.name = name;
         res.locals.roomName = roomName;
         // res.status(200).send(res.locals.roomName);
-        res.status(200).send('true');
         console.log('new room created');
         return next();
       });
     } else {
+      console.log('found in database')
       Room = createRoomModel(roomName);
       // console.log('folder name', Room);
       Room.findOne({ roomName }, (err, rom) => {
@@ -55,9 +56,8 @@ userCtrl.createRoom = function(req, res, next) {
         }
         if (rom.password !== password) {
           console.log('wrong password', rom);
-          return res.status(403).send('false');
+          return res.status(403)
         }
-        res.send('true');
         return next();
       });
     }

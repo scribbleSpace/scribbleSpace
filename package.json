@@ -23,13 +23,14 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "mongoose": "^5.7.4",
+    "nodemon": "^1.19.3",
     "react": "^16.10.2",
     "react-canvas-draw": "^1.0.2",
     "react-dom": "^16.10.2",
+    "react-router-dom": "^5.1.2",
     "socket.io": "^2.3.0",
     "webpack": "^4.41.1",
-    "webpack-cli": "^3.3.9",
-    "nodemon": "^1.19.3"
+    "webpack-cli": "^3.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

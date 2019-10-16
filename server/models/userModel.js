@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
+
+const uri = 'mongodb+srv://Admin:heelie@cluster0-vzivm.mongodb.net/test?retryWrites=true&w=majority'
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
 
 const UserSchema = new mongoose.Schema({
   roomName: {
