@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Styles from './styles.css';
-import MainBoard from './components/MainBoard.jsx';
+import App from './App.jsx';
 
-const Index = () => (
+const Scibble = () => (
   <div>
-    <h1 className="logoMain">scribbleSpace</h1>
-    <MainBoard />
+    <App/>
   </div>
 );
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Scibble />, document.getElementById('root'));
